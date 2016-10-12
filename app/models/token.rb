@@ -1,9 +1,12 @@
 class Token < ActiveRecord::Base
+  before_create :generate_token 
+  validates :token, :expires_at,  presence: true
   belongs_to :user
-  before_create :generate_token
+ 
   def token_is_valid?
     DateTime.now < self.expires_at
   end
+  
   private
 
   def generate_token

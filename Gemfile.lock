@@ -168,6 +168,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
+    user-agent (1.0.0)
     valid_email (0.0.13)
       activemodel
       mail (~> 2.6.1)
@@ -198,6 +199,7 @@ DEPENDENCIES
   sqlite3
   turbolinks
   uglifier (>= 1.3.0)
+  user-agent
   valid_email
   web-console (~> 2.0)
 

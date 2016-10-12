@@ -1,5 +1,7 @@
 class Package < ActiveRecord::Base
   belongs_to :user
+  has_many :ServicePackages
+  has_many :services, through: :ServicePackages
   validates :name,:description,:price,  presence: true
   validates :name,  uniqueness: { case_sensitive: false }
 
