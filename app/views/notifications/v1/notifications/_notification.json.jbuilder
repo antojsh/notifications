@@ -1,0 +1,2 @@
+json.extract! notification, :id, :message, :receiver, :send_date, :sent, :response, :response_date, :user_id, :service_id, :created_at, :updated_at
+json.url notification_url(notification, format: :json)

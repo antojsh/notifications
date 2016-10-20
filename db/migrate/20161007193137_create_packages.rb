@@ -5,8 +5,6 @@ class CreatePackages < ActiveRecord::Migration
       t.string :description
       t.integer :price
       t.boolean :active
-      t.references :user, index: true, foreign_key: true
-
       t.timestamps null: false
     end
   end

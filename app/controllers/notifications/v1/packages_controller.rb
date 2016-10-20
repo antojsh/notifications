@@ -6,12 +6,12 @@ class Notifications::V1::PackagesController < ApplicationController
     end
 
     def create
-        @package = @current_user.packages.build(my_packages_params)
-
-        if package.save
-            render json: @package 
+        @package = Package.new(my_packages_params)
+        @package.set_services = params[:services]
+        if @package.save
+            render :json => { :package => @package , :services => @package.services }
         else
-            render :json => { :errors => package.errors.full_messages }, :status => 422
+            render :json => { :errors => @package.errors.full_messages }, :status => 422
         end
     end
 
@@ -31,7 +31,7 @@ class Notifications::V1::PackagesController < ApplicationController
 
     private
     def my_packages_params
-        params.require(:package).permit(:name,:description,:price,:active)
+        params.require(:package).permit(:name,:description,:price,:active,:package_id,services:[])
     end
 
 

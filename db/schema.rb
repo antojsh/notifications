@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012141136) do
+ActiveRecord::Schema.define(version: 20161020103855) do
 
   create_table "movements", force: :cascade do |t|
     t.integer  "user_id"
@@ -24,6 +24,22 @@ ActiveRecord::Schema.define(version: 20161012141136) do
 
   add_index "movements", ["user_id"], name: "index_movements_on_user_id"
 
+  create_table "notifications", force: :cascade do |t|
+    t.text     "message"
+    t.string   "receiver"
+    t.date     "send_date"
+    t.boolean  "sent"
+    t.string   "response"
+    t.date     "response_date"
+    t.integer  "user_id"
+    t.integer  "service_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "notifications", ["service_id"], name: "index_notifications_on_service_id"
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
+
   create_table "operations", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "service_id"
@@ -31,6 +47,7 @@ ActiveRecord::Schema.define(version: 20161012141136) do
     t.boolean  "ilimitado"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "unit_price"
   end
 
   add_index "operations", ["service_id"], name: "index_operations_on_service_id"
@@ -41,12 +58,9 @@ ActiveRecord::Schema.define(version: 20161012141136) do
     t.string   "description"
     t.integer  "price"
     t.boolean  "active"
-    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
-
-  add_index "packages", ["user_id"], name: "index_packages_on_user_id"
 
   create_table "service_packages", force: :cascade do |t|
     t.integer  "service_id"
@@ -66,6 +80,9 @@ ActiveRecord::Schema.define(version: 20161012141136) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "total"
+    t.integer  "price"
+    t.string   "method"
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -88,6 +105,9 @@ ActiveRecord::Schema.define(version: 20161012141136) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "user_type"
+    t.integer  "package_id"
   end
+
+  add_index "users", ["package_id"], name: "index_users_on_package_id"
 
 end

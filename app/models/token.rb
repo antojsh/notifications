@@ -1,5 +1,5 @@
 class Token < ActiveRecord::Base
-  before_create :generate_token 
+  before_validation :generate_token 
   validates :token, :expires_at,  presence: true
   belongs_to :user
  
