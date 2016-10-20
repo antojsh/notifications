@@ -5,12 +5,20 @@ class Notifications::V1::NotificationsController < ApplicationController
   # GET /notifications
   # GET /notifications.json
   def send_sms
-    encoded_url = URI.encode('https://apismsi.aldeamo.com/smsr/r/hcws/smsSendGet/Geotech/octubre2016*/'+ params[:notification][:receiver]+'/57/'+params[:notification][:message])
-    response = RestClient.get encoded_url
+    
+    #response ='Mensaje enviado';
     @notification = Notification.new(notification_params)
-    @notification.set_response =  response
     @notification.set_user = @current_user
     if @notification.save
+      encoded_url = URI.encode('https://apismsi.aldeamo.com/smsr/r/hcws/smsSendGet/Geotech/octubre2016*/'+ params[:notification][:receiver]+'/57/'+params[:notification][:message])
+      response = RestClient.get encoded_url
+      _response = response.split('|')
+
+      if _response[0].to_i > 0
+        @notification.update(sent: true, response: _response[1])
+      else
+        @notification.update(sent: false, response: _response[1])
+      end 
       render :json => {:message => response}
     else
       render :json => {:message => 'Grave'}
@@ -89,13 +97,9 @@ class Notifications::V1::NotificationsController < ApplicationController
 
     def validate_package
        @service = @current_user.operations
-       #@service = @current_user.package.ServicePackages
        if @service.find_by(service_id: '1') 
           if @service[0].total <= 0
             validate_money()
-          #else
-           # response = RestClient.get 'https://apismsi.aldeamo.com/smsr/r/hcws/smsSendGet/Geotech/octubre2016*/3205651761/57/MENSAJE%20DE%20PRUEBA'
-            #render :json => {:message => response}
           end
        else
         validate_money()
