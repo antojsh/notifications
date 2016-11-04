@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020103855) do
+ActiveRecord::Schema.define(version: 20161020171720) do
 
   create_table "movements", force: :cascade do |t|
     t.integer  "user_id"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20161020103855) do
     t.integer  "total"
     t.integer  "price"
     t.string   "method"
+    t.boolean  "ilimitado"
   end
 
   create_table "tokens", force: :cascade do |t|

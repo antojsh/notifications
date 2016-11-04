@@ -13,6 +13,9 @@ class Notification < ActiveRecord::Base
   def set_user=(value)
     @user = value
   end
+  def set_id_service=(value)
+    @service = value
+  end
 
   
 
@@ -26,8 +29,10 @@ class Notification < ActiveRecord::Base
   end
 
   def update_operation
-      service = @user.operations.find_by(service_id: self.service_id)
 
-      service.update(:total => service.total - 1)
+      service = @user.operations.where(service_id: @service).take
+      if !service.ilimitado
+        service.update(:total => service.total - 1)
+      end
   end
 end

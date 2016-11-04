@@ -49,6 +49,6 @@ class Notifications::V1::ServicesController < ApplicationController
     end
 
     def service_params
-        params.require(:service).permit(:name, :description, :total, :price, :method)
+        params.require(:service).permit(:name, :description, :total, :price, :method, :ilimitado)
     end
 end
